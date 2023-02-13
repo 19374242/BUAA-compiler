@@ -1,0 +1,424 @@
+.data
+a: .word 0
+b: .word 0
+c: .word 0
+d: .word 0
+e: .word 0
+i: .word 0
+str0: .asciiz "glo_i = "
+str6: .asciiz "\n"
+str4: .asciiz "main_i = "
+str2: .asciiz "sum = "
+.text
+move $fp, $sp
+jal main
+li $v0, 10
+syscall
+# DECL_VAR_IDENT:var int a
+# DECL_VAR_IDENT:var int b
+# DECL_VAR_IDENT:var int c
+# DECL_VAR_IDENT:var int d
+# DECL_VAR_IDENT:var int e
+# DECL_VAR_IDENT:var int i = 0
+# FUNC_BEGIN:func begin
+# INT_FUNC:int func0()
+func0:
+# PARA:para int a
+lw $s0, 0($sp)
+# PARA:para int b
+lw $s1, -4($sp)
+# DECL_VAR_IDENT:var int i = 0
+li $s2, 0
+# DECL_VAR_IDENT:var int c = 128
+li $s3, 128
+# ADD:$T0 = a + b
+addu $t4, $s0, $s1
+# MOD:$T1 = $T0 % c
+div $t4, $s3
+mfhi $t4
+# RETURN:ret $T1
+move $v0, $t4
+jr $ra
+# FUNC_END:func end
+jr $ra
+# FUNC_BEGIN:func begin
+# INT_FUNC:int func1()
+func1:
+# PARA:para int a
+lw $s0, 0($sp)
+# ADD:i = i + 1
+lw $t1, i
+addiu $t2, $t1, 1
+sw $t2, i
+# RETURN:ret i
+lw $t3, i
+move $v0, $t3
+jr $ra
+# FUNC_END:func end
+jr $ra
+# FUNC_BEGIN:func begin
+# INT_FUNC:int func2()
+func2:
+# PARA:para int a
+lw $s0, 0($sp)
+# PARA:para int b
+lw $s1, -4($sp)
+# MOD:$T3 = a % b
+div $s0, $s1
+mfhi $t4
+# EQL:set $T4 on $T3 == 0
+li $t1, 0
+seq $t4, $t4, $t1
+# BEQ:branch if_end0 on $T4 == 0
+li $t2, 0
+beq $t4, $t2, if_end0
+# LABEL:label if_begin0:
+if_begin0:
+# BLOCK_BEGIN:block begin
+# RETURN:ret 1
+li $t3, 1
+move $v0, $t3
+jr $ra
+# BLOCK_END:block end
+# LABEL:label if_end0:
+if_end0:
+# RETURN:ret 0
+li $t0, 0
+move $v0, $t0
+jr $ra
+# FUNC_END:func end
+jr $ra
+# FUNC_BEGIN:func begin
+# INT_FUNC:int func3()
+func3:
+# PRINT_STR:print string glo_i = 
+la $a0, str0
+li $v0, 4
+syscall
+# PRINT_INT:print int i
+lw $t1, i
+move $a0, $t1
+li $v0, 1
+syscall
+# PRINT_STR:print string \n
+la $a0, str6
+li $v0, 4
+syscall
+# DECL_VAR_IDENT:var int tt0
+# DECL_VAR_IDENT:var int tt1
+# DECL_VAR_IDENT:var int t2
+# DECL_VAR_IDENT:var int tt3
+# DECL_VAR_IDENT:var int tt4
+# DECL_VAR_IDENT:var int v = 1906
+li $s5, 1906
+# WHILE_BEGIN:while begin
+# GOTO:goto loop0
+j loop0
+# LABEL:label loop_begin0:
+loop_begin0:
+# BLOCK_BEGIN:block begin
+# MUL:$T5 = a * 4
+lw $t2, a
+sll $t4, $t2, 2
+# MUL:$T6 = $T5 * 32
+sll $t4, $t4, 5
+# MUL:$T7 = $T6 * a
+lw $t3, a
+mul $t4, $t4, $t3
+# DIV:$T8 = $T7 / a
+lw $t0, a
+div $t4, $t0
+mflo $t4
+# DIV:$T9 = $T8 / 32
+sra $t1, $t4, 4
+srl $t1, $t1, 27
+add $t1, $t4, $t1
+sra $t1, $t1, 5
+move $t4, $t1
+# DECL_VAR_IDENT:var int v = $T9
+move $s6, $t4
+# CALL_BEGIN:call begin func0
+sw $s0, -28($sp)
+sw $s1, -32($sp)
+sw $s2, -36($sp)
+sw $s3, -40($sp)
+sw $s4, -44($sp)
+sw $s5, -48($sp)
+sw $s6, -52($sp)
+sw $ra, -56($sp)
+subu $sp, $sp, 60
+# PUSH:push b
+lw $t2, b
+sw $t2, 0($sp)
+# PUSH:push v
+sw $s6, -4($sp)
+# CALL:call func0
+move $fp, $sp
+jal func0
+addiu $sp, $sp, 60
+move $fp, $sp
+lw $s6, -52($sp)
+lw $s5, -48($sp)
+lw $s4, -44($sp)
+lw $s3, -40($sp)
+lw $s2, -36($sp)
+lw $s1, -32($sp)
+lw $s0, -28($sp)
+lw $ra, -56($sp)
+# ASSIGNMENT:$T10 = @RET
+move $t4, $v0
+# ASSIGNMENT:b = $T10
+sw $t4, b
+# MUL:$T11 = a * 4
+lw $t3, a
+sll $t4, $t3, 2
+# ADD:$T12 = $T11 + b
+lw $t0, b
+addu $t4, $t4, $t0
+# ADD:tt0 = $T12 + c
+lw $t1, c
+addu $t2, $t4, $t1
+move $s0, $t2
+# MUL:$T14 = a * 4
+lw $t3, a
+sll $t4, $t3, 2
+# ADD:$T15 = $T14 + b
+lw $t0, b
+addu $t4, $t4, $t0
+# ADD:$T16 = $T15 + c
+lw $t1, c
+addu $t4, $t4, $t1
+# ADD:tt1 = $T16 + d
+lw $t2, d
+addu $t3, $t4, $t2
+move $s1, $t3
+# MUL:$T18 = a * 4
+lw $t0, a
+sll $t4, $t0, 2
+# ADD:$T19 = $T18 + b
+lw $t1, b
+addu $t4, $t4, $t1
+# ADD:$T20 = $T19 + c
+lw $t2, c
+addu $t4, $t4, $t2
+# ADD:$T21 = $T20 + d
+lw $t3, d
+addu $t4, $t4, $t3
+# ADD:t2 = $T21 + e
+lw $t0, e
+addu $t1, $t4, $t0
+move $s2, $t1
+# MUL:$T23 = a * 4
+lw $t2, a
+sll $t4, $t2, 2
+# ADD:$T24 = $T23 + b
+lw $t3, b
+addu $t4, $t4, $t3
+# ADD:$T25 = $T24 + c
+lw $t0, c
+addu $t4, $t4, $t0
+# ADD:$T26 = $T25 + d
+lw $t1, d
+addu $t4, $t4, $t1
+# ADD:tt3 = $T26 + e
+lw $t2, e
+addu $t3, $t4, $t2
+move $s3, $t3
+# MUL:$T28 = a * 4
+lw $t0, a
+sll $t4, $t0, 2
+# ADD:$T29 = $T28 + b
+lw $t1, b
+addu $t4, $t4, $t1
+# ADD:$T30 = $T29 + c
+lw $t2, c
+addu $t4, $t4, $t2
+# ADD:$T31 = $T30 + d
+lw $t3, d
+addu $t4, $t4, $t3
+# ADD:tt4 = $T31 + e
+lw $t0, e
+addu $t1, $t4, $t0
+move $s4, $t1
+# CALL_BEGIN:call begin func2
+sw $s0, -28($sp)
+sw $s1, -32($sp)
+sw $s2, -36($sp)
+sw $s3, -40($sp)
+sw $s4, -44($sp)
+sw $s5, -48($sp)
+sw $s6, -52($sp)
+sw $ra, -56($sp)
+subu $sp, $sp, 60
+# PUSH:push i
+lw $t2, i
+sw $t2, 0($sp)
+# PUSH:push 1000
+li $t3, 1000
+sw $t3, -4($sp)
+# CALL:call func2
+move $fp, $sp
+jal func2
+addiu $sp, $sp, 60
+move $fp, $sp
+lw $s6, -52($sp)
+lw $s5, -48($sp)
+lw $s4, -44($sp)
+lw $s3, -40($sp)
+lw $s2, -36($sp)
+lw $s1, -32($sp)
+lw $s0, -28($sp)
+lw $ra, -56($sp)
+# ASSIGNMENT:$T33 = @RET
+move $t4, $v0
+# BEQ:branch if_end1 on $T33 == 0
+li $t0, 0
+beq $t4, $t0, if_end1
+# LABEL:label if_begin1:
+if_begin1:
+# BLOCK_BEGIN:block begin
+# ADD:$T34 = tt0 + tt1
+addu $t4, $s0, $s1
+# ADD:$T35 = $T34 + t2
+addu $t4, $t4, $s2
+# ADD:$T36 = $T35 + tt3
+addu $t4, $t4, $s3
+# ADD:$T37 = $T36 + tt4
+addu $t4, $t4, $s4
+# PRINT_STR:print string sum = 
+la $a0, str2
+li $v0, 4
+syscall
+# PRINT_INT:print int $T37
+move $a0, $t4
+li $v0, 1
+syscall
+# PRINT_STR:print string \n
+la $a0, str6
+li $v0, 4
+syscall
+# BLOCK_END:block end
+# LABEL:label if_end1:
+if_end1:
+# CALL_BEGIN:call begin func1
+sw $s0, -28($sp)
+sw $s1, -32($sp)
+sw $s2, -36($sp)
+sw $s3, -40($sp)
+sw $s4, -44($sp)
+sw $s5, -48($sp)
+sw $s6, -52($sp)
+sw $ra, -56($sp)
+subu $sp, $sp, 60
+# PUSH:push i
+lw $t1, i
+sw $t1, 0($sp)
+# CALL:call func1
+move $fp, $sp
+jal func1
+addiu $sp, $sp, 60
+move $fp, $sp
+lw $s6, -52($sp)
+lw $s5, -48($sp)
+lw $s4, -44($sp)
+lw $s3, -40($sp)
+lw $s2, -36($sp)
+lw $s1, -32($sp)
+lw $s0, -28($sp)
+lw $ra, -56($sp)
+# ASSIGNMENT:$T38 = @RET
+move $t4, $v0
+# BLOCK_END:block end
+# LABEL:label loop0:
+loop0:
+# LSS:set $T39 on i < 10000
+lw $t2, i
+li $t3, 10000
+slt $t5, $t2, $t3
+# BNE:branch loop_begin0 on $T39 != 0
+li $t0, 0
+bne $t5, $t0, loop_begin0
+# LABEL:label loop_end0:
+loop_end0:
+# WHILE_END:while end
+# ADD:$T40 = tt0 + tt1
+addu $t5, $s0, $s1
+# ADD:$T41 = $T40 + t2
+addu $t5, $t5, $s2
+# ADD:$T42 = $T41 + tt3
+addu $t5, $t5, $s3
+# ADD:$T43 = $T42 + tt4
+addu $t5, $t5, $s4
+# RETURN:ret $T43
+move $v0, $t5
+jr $ra
+# FUNC_END:func end
+jr $ra
+# MAIN:main begin
+main:
+# BLOCK_BEGIN:block begin
+# DECL_VAR_IDENT:var int i = 0
+li $s0, 0
+# GETINT:read a
+li $v0, 5
+syscall
+sw $v0, a
+# GETINT:read b
+li $v0, 5
+syscall
+sw $v0, b
+# GETINT:read c
+li $v0, 5
+syscall
+sw $v0, c
+# GETINT:read d
+li $v0, 5
+syscall
+sw $v0, d
+# GETINT:read e
+li $v0, 5
+syscall
+sw $v0, e
+# GETINT:read i
+li $v0, 5
+syscall
+move $s0, $v0
+# PRINT_STR:print string main_i = 
+la $a0, str4
+li $v0, 4
+syscall
+# PRINT_INT:print int i
+move $a0, $s0
+li $v0, 1
+syscall
+# PRINT_STR:print string \n
+la $a0, str6
+li $v0, 4
+syscall
+# CALL_BEGIN:call begin func3
+sw $s0, -4($sp)
+sw $ra, -8($sp)
+subu $sp, $sp, 12
+# CALL:call func3
+move $fp, $sp
+jal func3
+addiu $sp, $sp, 12
+move $fp, $sp
+lw $s0, -4($sp)
+lw $ra, -8($sp)
+# ASSIGNMENT:$T44 = @RET
+move $t4, $v0
+# PRINT_INT:print int $T44
+move $a0, $t4
+li $v0, 1
+syscall
+# PRINT_STR:print string \n
+la $a0, str6
+li $v0, 4
+syscall
+# RETURN:ret 0
+li $t1, 0
+move $v0, $t1
+jr $ra
+# BLOCK_END:block end
+# MAIN_END:main end

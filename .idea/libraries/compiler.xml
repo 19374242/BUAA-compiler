@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="compiler">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/compiler/src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/compiler/19374242-高远-总结感想.zip!/" />
+      <root url="jar://$PROJECT_DIR$/compiler/19374242.zip!/" />
+      <root url="jar://$PROJECT_DIR$/compiler/19374242-高远-设计文档.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,144 @@
+var int a
+var int b
+var int c
+var int d
+var int e
+var int i = 0
+func begin
+int func0()
+para int a
+para int b
+var int i = 0
+var int c = 128
+$T0 = a + b
+$T1 = $T0 % c
+ret $T1
+func end
+func begin
+int func1()
+para int a
+$T2 = i + 1
+i = $T2
+ret i
+func end
+func begin
+int func2()
+para int a
+para int b
+$T3 = a % b
+set $T4 on $T3 == 0
+branch if_end0 on $T4 == 0
+label if_begin0:
+block begin
+ret 1
+block end
+label if_end0:
+ret 0
+func end
+func begin
+int func3()
+print string glo_i = 
+print int i
+print string \n
+var int tt0
+var int tt1
+var int t2
+var int tt3
+var int tt4
+var int v = 1906
+while begin
+goto loop0
+label loop_begin0:
+block begin
+$T5 = a * 4
+$T6 = $T5 * 32
+$T7 = $T6 * a
+$T8 = $T7 / a
+$T9 = $T8 / 32
+var int v = $T9
+call begin func0
+push b
+push v
+call func0
+$T10 = @RET
+b = $T10
+$T11 = a * 4
+$T12 = $T11 + b
+$T13 = $T12 + c
+tt0 = $T13
+$T14 = a * 4
+$T15 = $T14 + b
+$T16 = $T15 + c
+$T17 = $T16 + d
+tt1 = $T17
+$T18 = a * 4
+$T19 = $T18 + b
+$T20 = $T19 + c
+$T21 = $T20 + d
+$T22 = $T21 + e
+t2 = $T22
+$T23 = a * 4
+$T24 = $T23 + b
+$T25 = $T24 + c
+$T26 = $T25 + d
+$T27 = $T26 + e
+tt3 = $T27
+$T28 = a * 4
+$T29 = $T28 + b
+$T30 = $T29 + c
+$T31 = $T30 + d
+$T32 = $T31 + e
+tt4 = $T32
+call begin func2
+push i
+push 1000
+call func2
+$T33 = @RET
+branch if_end1 on $T33 == 0
+label if_begin1:
+block begin
+$T34 = tt0 + tt1
+$T35 = $T34 + t2
+$T36 = $T35 + tt3
+$T37 = $T36 + tt4
+print string sum = 
+print int $T37
+print string \n
+block end
+label if_end1:
+call begin func1
+push i
+call func1
+$T38 = @RET
+block end
+label loop0:
+set $T39 on i < 10000
+branch loop_begin0 on $T39 != 0
+label loop_end0:
+while end
+$T40 = tt0 + tt1
+$T41 = $T40 + t2
+$T42 = $T41 + tt3
+$T43 = $T42 + tt4
+ret $T43
+func end
+main begin
+block begin
+var int i = 0
+read a
+read b
+read c
+read d
+read e
+read i
+print string main_i = 
+print int i
+print string \n
+call begin func3
+call func3
+$T44 = @RET
+print int $T44
+print string \n
+ret 0
+block end
+main end
